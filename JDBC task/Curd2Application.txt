@@ -1,0 +1,220 @@
+package com.example.demo;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Scanner;
+
+public class Curd2Application {
+	public static String driver_class ="com.mysql.cj.jdbc.Driver"; //Driver class
+	public static String url = "jdbc:mysql://localhost:3306/new_schema"; //Database url
+	public static String user = "root"; //Database Name
+	public static String pass = "jaga2001"; //Database password
+	
+	
+	//Insert method to insert value into the database
+	public void insertvalue() 
+	{
+		Scanner sc=new Scanner(System.in);
+		
+		System.out.println("How many record you should be Inserted : ");
+		int ch=sc.nextInt();
+
+		try {
+			
+			//Driver class
+			Class.forName(driver_class);
+			
+			//Connecting to database based on my url ,database_name and password
+			Connection con = DriverManager.getConnection(url, user, pass);
+			
+			System.out.println ("Connection successfully established!");
+			
+			//Open statement
+			Statement st=con.createStatement();
+			
+			//Input form user using loop
+			while(ch>0) {
+				System.out.println("ID: ");
+				int id = sc.nextInt();
+				System.out.println("Name: ");
+				String name=sc.next();
+				System.out.println("Email: ");
+				String email=sc.next();
+				System.out.println("Phone: ");
+				long phone = sc.nextLong();
+				System.out.println("Address: ");
+				String address=sc.next();
+				System.out.println("Guardian_Name: ");
+				String guardianname=sc.next();
+				System.out.println("Guardian_Phone: ");
+				long guardianphone=sc.nextLong();
+				System.out.println("Entrolment_Date: ");
+				String entrolment_date=sc.next();
+			
+			String sql="insert into student values("+id+",'"+name+"','"+email+"' ,"+phone+",'"+address+"','"
+					+guardianname+ "','"+guardianphone+"','"+entrolment_date+"')";
+			
+			//Execute Query
+			st.execute(sql);
+			System.out.println("Inserted Successfully!!!!!!");
+			ch--;
+			}
+			
+			//Close Statement
+			st.close();
+			
+			//Close Connection
+			con.close();
+			
+		} catch (Exception ex) {
+			System.out.println("Message: " + ex.getMessage());
+		}
+
+
+	}
+	
+	public void update()
+	{
+		Scanner sc =new Scanner(System.in);
+		try {
+			
+			//Driver class
+			Class.forName(driver_class);
+			
+			//Connecting to database based on my url ,database_name and password
+			Connection con = DriverManager.getConnection(url, user, pass);
+			
+			System.out.println ("Connection successfully established!");
+			
+			
+			//Open statement
+			Statement st=con.createStatement();
+			
+			System.out.println("ID: ");
+			int id = sc.nextInt();
+			System.out.println("Name: ");
+			String name=sc.next();
+			System.out.println("Email: ");
+			String email=sc.next();
+			System.out.println("Phone: ");
+			long phone = sc.nextLong();
+			System.out.println("Address: ");
+			String address=sc.next();
+			System.out.println("Guardian_Name: ");
+			String guardianname=sc.next();
+			System.out.println("Guardian_Phone: ");
+			long guardianphone=sc.nextLong();
+			System.out.println("Entrolment_Date: ");
+			String entrolment_date=sc.next();
+			
+			String sql="update student set Name='"+name+"',Email='"+email+"', Phone="+phone+",Address='"+address+"',Guardian_Name='"+guardianname+"',Guardian_Phone='"+guardianphone+"',"
+					+ "Enrollment_Date='"+entrolment_date+"' where id="+id; 
+			
+			//Execute Query
+			st.execute(sql);
+			System.out.println("Update Successfully!!!!!!");
+				
+			//Close Statement
+			st.close();
+			
+			//Close Connection
+			con.close();
+			
+		} catch (Exception ex) {
+			System.out.println("Message: " + ex.getMessage());
+		}
+
+	}
+	
+	//Update method
+	public void retrive()
+	{
+		try {
+			
+			//Driver class
+			Class.forName(driver_class);
+			
+			//Connecting to database based on my url ,database_name and password
+			Connection con = DriverManager.getConnection(url, user, pass);
+			
+			System.out.println ("Connection successfully established!");
+			
+			
+			
+			//Open statement
+			Statement st=con.createStatement();
+			
+			//Update query 
+			String sql="select * from student"; 
+
+			//Execute Query and store ResultSet 
+			ResultSet rs=st.executeQuery(sql);
+		
+			while(rs.next()) {
+				System.out.print("ID: "+rs.getInt("id")+" , ");
+				System.out.println("Name: "+rs.getString("name")+" , ");
+				System.out.print("Email: "+rs.getString("email")+" , ");
+				System.out.print("Phone: "+rs.getLong("phone")+" , ");
+				System.out.print("Address: "+rs.getString("address")+" , ");
+				System.out.print("Guardian_Name: "+rs.getString("guardianname")+" , ");
+				System.out.print("Guardian_Phone: "+rs.getString("guardianphone")+" , ");
+				System.out.print("Entrollment_Date: "+rs.getDate("enrollment_date")+" , ");
+				
+				System.out.println("\n");
+			}
+			//Close Statement
+			st.close();
+			
+			//Close Connection
+			con.close();
+			
+		} catch (Exception ex) {
+			System.out.println("Message: " + ex.getMessage());
+		}
+
+
+	}
+	
+	
+	//Delete method
+	public void delete()
+	{
+		System.out.println("Enter the ID you want to delete: ");
+		Scanner sc =new Scanner(System.in);
+		int id =sc.nextInt();
+
+			try {
+				//Driver class
+				Class.forName(driver_class);
+				
+				//Connecting to database based on my url ,database_name and password
+				Connection con = DriverManager.getConnection(url, user, pass);
+				
+				System.out.println ("Connection successfully established!");
+				
+				
+				//Open statement
+				Statement st=con.createStatement();
+				
+				String sql="delete from student "+"where id = '" +id+"' "; 
+				
+				//Execute Query
+				st.execute(sql);
+				System.out.println("Successfully Deleted for record: " + id);
+				
+				//Close Statement
+				st.close();
+				
+				//Close Connection
+				con.close();
+				
+			} catch (Exception ex) {
+				System.out.println("Message: " + ex.getMessage());
+			}
+	}
+	
+
+}
+

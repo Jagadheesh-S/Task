@@ -1,0 +1,61 @@
+package com.example.demo;
+
+import java.util.Scanner;
+
+public class StudentManagement {
+
+	public static void main(String[] args) {
+		
+		Scanner sc=new Scanner(System.in);
+		Curd2Application curdapplication = new Curd2Application();
+		int choice=0;
+	
+		while(choice != 5)
+		{
+		System.out.println("1.Insert New Records");
+		System.out.println("2.Update Records");
+		System.out.println("3.Retrive Records");
+		System.out.println("4.Delete Records");
+		System.out.println("5. Exit");
+		System.out.println("\n");
+		System.out.println("Enter operation you want to do......... ");
+		choice=sc.nextInt();
+		switch(choice)
+		{
+		case 1:
+		{
+			curdapplication.insertvalue();
+			break;
+		}
+		case 2:
+		{
+			curdapplication.update();
+			break;
+		}
+		case 3:
+		{
+			curdapplication.retrive();
+			break;
+		}
+		case 4:
+		{
+			curdapplication.delete();
+			
+		}
+		case 5:
+		{
+			System.out.println("Exit");
+			break;
+		}
+		default:
+		{
+			System.out.println("Invalid Choice");
+		}
+		
+		}
+		
+	}
+
+	}
+
+}
